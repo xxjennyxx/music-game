@@ -50,5 +50,5 @@ function startScreen:create(event)
 end
 
 startScreen:addEventListener("create", startScreen)
-
+ 
 return startScreen
