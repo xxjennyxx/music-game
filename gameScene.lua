@@ -1,9 +1,8 @@
 local composer = require("composer")
-local gameScene = composer.newScene()
-
-function gameScene:create(event)
+local scene = composer.newScene()
+function scene:create(event)
+composer.removeScene("startScreen")
     local sceneGroup = self.view
-
     local backgroundmusic = audio.loadStream("images/test.wav")
     audio.play(backgroundmusic, { channel = 1, loops = 1 })
     audio.setVolume(0.2, { channel = 1 })
@@ -15,7 +14,7 @@ function gameScene:create(event)
     physics.start()
     physics.setGravity(0, 10) --beats acceleration 
 
-    local speedsetting = 1500 --�����t�סA�V�p�V��
+    local speedsetting = 1500 --beats dropped speed
     local hitbox = 30 --hitbox
     local combo_num = 0
 
@@ -55,42 +54,6 @@ function gameScene:create(event)
     ground4.x = 390
     ground4.y = 500
     ground4.alpha = 0.5
-    local function produce_beat(ground_num)
-        local x=0
-        local y=-60
-        if ground_num == 1 then
-            x=-120
-        end
-        if ground_num == 2 then
-            x=50
-        end
-        if ground_num == 3 then
-            x=220
-        end
-        if ground_num == 4 then
-            x=390
-        end
-        local beat = display.newImageRect( "images/gear2.png", 60, 60 )
-                beat.x = x
-                beat.y = y
-                beat.alpha=0.8
-                transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=360,onComplete=miss}) 
-            local function miss()
-                combo_num=-1
-                combo_score.text=combo_num                        
-            end     
-                
-            local function hit()
-                combo_num=combo_num+1
-                combo_score.text=combo_num
-                beat:removeSelf()
-                beat= nil 
-            end
-            physics.addBody(beat,"dymatic") 
-        bound:addEventListener("collision",miss) 
-        beat:addEventListener("collision",hit) 
-    
-    end
 
     local switch2=0
     local act = function(event)
@@ -101,7 +64,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = -120 
                 space.y = 410
-                space.alpha=0
+                space.alpha=0.5
                 local  function del()
                     space:removeSelf()
                     space= nil                                
@@ -116,7 +79,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = 50 
                 space.y = 410
-                space.alpha=0
+                space.alpha=0.5
                 local  function del()
                     space:removeSelf()
                     space= nil                                
@@ -131,7 +94,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = 220 
                 space.y = 410
-                space.alpha=0
+                space.alpha=0.5
                 local  function del()
                     space:removeSelf()
                     space= nil                                
@@ -146,7 +109,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = 390 
                 space.y = 410
-                space.alpha=0
+                space.alpha=0.5
                 local function del()
                     space:removeSelf()
                     space= nil                                
@@ -221,7 +184,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = -120 
                 space.y = 450
-                space.alpha=0
+                space.alpha=0.5
 
                 local function del()
                     space:removeSelf()
@@ -240,7 +203,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = 50
                 space.y = 450
-                space.alpha=0
+                space.alpha=0.5
                 
                 local  function del()
                     space:removeSelf()
@@ -259,7 +222,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = 220
                 space.y = 450
-                space.alpha=0
+                space.alpha=0.5
                 
                 local  function del()
                     space:removeSelf()
@@ -278,7 +241,7 @@ function gameScene:create(event)
                 local space = display.newImageRect( "images/crate.png", 100, 30 )
                 space.x = 390 
                 space.y = 450
-                space.alpha=0
+                space.alpha=0.5
                 
                 local  function del()
                     space:removeSelf()
@@ -289,11 +252,49 @@ function gameScene:create(event)
                 switch2=1
             end
         end
+
     end
 
+        function produce_beat(ground_num)
+            local x=0
+            local y=-60
+            if ground_num == 1 then
+                x=-120
+            end
+            if ground_num == 2 then
+                x=50
+            end
+            if ground_num == 3 then
+                x=220
+            end
+            if ground_num == 4 then
+                x=390
+            end
+            local beat = display.newImageRect( "images/gear2.png", 60, 60 )
+                    beat.x = x
+                    beat.y = y
+                    beat.alpha=0.8
+                    transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=360,onComplete=miss}) 
+                local function miss()
+                    combo_num=-1
+                    combo_score.text=combo_num                        
+                end     
+                    
+                local function hit()
+                    combo_num=combo_num+1
+                    combo_score.text=combo_num
+                    beat:removeSelf()
+                    beat= nil 
+                end
+                physics.addBody(beat,"dymatic") 
+            bound:addEventListener("collision",miss) 
+            beat:addEventListener("collision",hit) 
+        
+        end
+        
     Runtime:addEventListener( "touch", act)
 
-    --�Э�
+    -- sheet music
     timer.performWithDelay( 400, function() produce_beat(1) end,1 )
     timer.performWithDelay( 780, function() produce_beat(2) end,1 )
     timer.performWithDelay( 1160, function() produce_beat(3) end,1 )
@@ -307,6 +308,5 @@ function gameScene:create(event)
     timer.performWithDelay( 5140, function() produce_beat(2) end,1 )
 end
 
-gameScene:addEventListener("create", gameScene)
-
-return gameScene
+scene:addEventListener( "create", scene )
+return scene

@@ -1,24 +1,19 @@
 local composer = require("composer") -- 用於創建場景
-local startScreen = composer.newScene()
+local scene = composer.newScene()
 
-function startScreen:create(event)
+function scene:create(event)
     local sceneGroup = self.view
-
+	
     -- 設定背景
-    local background = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
-    background:setFillColor(0.2, 0.2, 0.2)
+    local background = display.newImageRect("images/background.png", 600, 300)
+	background.x=500
+	background.y=300
     sceneGroup:insert(background)
 
     -- 顯示遊戲標題
-    local gameTitle = display.newText({
-        text = "音樂遊戲",
-        x = display.contentCenterX,
-        y = display.contentCenterY - 100,
-        width = 300,
-        font = native.systemFontBold,
-        fontSize = 48
-    })
-    gameTitle:setFillColor(1, 1, 1)
+    local gameTitle = display.newImageRect("images/title.png", 200, 100)
+	gameTitle.x=-200
+	gameTitle.y=50
     sceneGroup:insert(gameTitle)
 
     -- 開始遊戲按鈕
@@ -42,13 +37,19 @@ function startScreen:create(event)
         if event.phase == "ended" then
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
-            composer.gotoScene("gameScene", { effect = "fade", time = 500 })
+			composer.removeScene("scene")
+            composer.gotoScene("gameScene")
         end
     end
 
     startButton:addEventListener("touch", startGame)
 end
 
-startScreen:addEventListener("create", startScreen)
- 
-return startScreen
+
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
+-- "scene:destroy()"
+
+return scene
