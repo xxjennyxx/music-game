@@ -5,15 +5,15 @@ function scene:create(event)
     local sceneGroup = self.view
 	
     -- 設定背景
-    local background = display.newImageRect("images/background.png", 600, 300)
-	background.x=500
-	background.y=300
+	local background = display.newImageRect("images/Floral.png", 1000, 480)
+	background.x=150
+	background.y=240
     sceneGroup:insert(background)
 
     -- 顯示遊戲標題
     local gameTitle = display.newImageRect("images/title.png", 200, 100)
-	gameTitle.x=-200
-	gameTitle.y=50
+	gameTitle.x=-170
+	gameTitle.y=120
     sceneGroup:insert(gameTitle)
 
     -- 開始遊戲按鈕
@@ -38,7 +38,7 @@ function scene:create(event)
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
 			composer.removeScene("scene")
-            composer.gotoScene("gameScene")
+            composer.gotoScene("select")
         end
     end
 
