@@ -14,7 +14,7 @@ composer.removeScene("startScreen")
     physics.start()
     physics.setGravity(0, 10) --beats acceleration 
 
-    local speedsetting = 1500 --     t סA V p V  
+    local speedsetting = 1500 --beats dropped speed
     local hitbox = 30 --hitbox
     local combo_num = 0
 
@@ -294,7 +294,7 @@ composer.removeScene("startScreen")
         
     Runtime:addEventListener( "touch", act)
 
-    -- Э 
+    -- sheet music
     timer.performWithDelay( 400, function() produce_beat(1) end,1 )
     timer.performWithDelay( 780, function() produce_beat(2) end,1 )
     timer.performWithDelay( 1160, function() produce_beat(3) end,1 )
