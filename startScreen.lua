@@ -42,46 +42,13 @@ function startScreen:create(event)
         if event.phase == "ended" then
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
-            composer.gotoScene("gameScene")  -- 切換到遊戲場景，假設場景名稱為 "gameScene"
+            composer.gotoScene("gameScene", { effect = "fade", time = 500 })
         end
     end
 
     startButton:addEventListener("touch", startGame)
 end
 
--- function startScreen:show(event)
---     local sceneGroup = self.view
---     local phase = event.phase
-
---     if phase == "will" then
---         -- Code here runs when the scene is still off screen (but is about to come on screen)
-
---     elseif phase == "did" then
---         -- Code here runs when the scene is entirely on screen
---     end
--- end
-
--- function startScreen:hide(event)
---     local sceneGroup = self.view
---     local phase = event.phase
-
---     if phase == "will" then
---         -- Code here runs when the scene is on screen (but is about to go off screen)
-
---     elseif phase == "did" then
---         -- Code here runs immediately after the scene goes entirely off screen
-
---     end
--- end
-
--- function startScreen:destroy(event)
---     local sceneGroup = self.view
---     -- Code here runs prior to the removal of the scene's view
--- end
-
 startScreen:addEventListener("create", startScreen)
--- startScreen:addEventListener("show", startScreen)
--- startScreen:addEventListener("hide", startScreen)
--- startScreen:addEventListener("destroy", startScreen)
 
 return startScreen
