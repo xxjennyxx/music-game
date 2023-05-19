@@ -55,6 +55,42 @@ function gameScene:create(event)
     ground4.x = 390
     ground4.y = 500
     ground4.alpha = 0.5
+    local function produce_beat(ground_num)
+        local x=0
+        local y=-60
+        if ground_num == 1 then
+            x=-120
+        end
+        if ground_num == 2 then
+            x=50
+        end
+        if ground_num == 3 then
+            x=220
+        end
+        if ground_num == 4 then
+            x=390
+        end
+        local beat = display.newImageRect( "images/gear2.png", 60, 60 )
+                beat.x = x
+                beat.y = y
+                beat.alpha=0.8
+                transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=360,onComplete=miss}) 
+            local function miss()
+                combo_num=-1
+                combo_score.text=combo_num                        
+            end     
+                
+            local function hit()
+                combo_num=combo_num+1
+                combo_score.text=combo_num
+                beat:removeSelf()
+                beat= nil 
+            end
+            physics.addBody(beat,"dymatic") 
+        bound:addEventListener("collision",miss) 
+        beat:addEventListener("collision",hit) 
+    
+    end
 
     local switch2=0
     local act = function(event)
@@ -253,46 +289,8 @@ function gameScene:create(event)
                 switch2=1
             end
         end
-
-        local function produce_beat(ground_num)
-            local x=0
-            local y=-60
-            if ground_num == 1 then
-                x=-120
-            end
-            if ground_num == 2 then
-                x=50
-            end
-            if ground_num == 3 then
-                x=220
-            end
-            if ground_num == 4 then
-                x=390
-            end
-            local beat = display.newImageRect( "images/gear2.png", 60, 60 )
-                    beat.x = x
-                    beat.y = y
-                    beat.alpha=0.8
-                    transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=360,onComplete=miss}) 
-                local function miss()
-                    combo_num=-1
-                    combo_score.text=combo_num                        
-                end     
-                    
-                local function hit()
-                    combo_num=combo_num+1
-                    combo_score.text=combo_num
-                    beat:removeSelf()
-                    beat= nil 
-                end
-                physics.addBody(beat,"dymatic") 
-            bound:addEventListener("collision",miss) 
-            beat:addEventListener("collision",hit) 
-        
-        end
     end
 
-        
     Runtime:addEventListener( "touch", act)
 
     --�Э�
@@ -308,4 +306,7 @@ function gameScene:create(event)
     timer.performWithDelay( 4440, function() produce_beat(3) end,1 )
     timer.performWithDelay( 5140, function() produce_beat(2) end,1 )
 end
+
+gameScene:addEventListener("create", gameScene)
+
 return gameScene
