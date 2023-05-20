@@ -43,7 +43,7 @@ function gameScene:create(event)
 
     local ground2 = display.newImageRect("images/BG3.png", 150, 1000)
     ground2.x = 50
-    ground2.y = 500
+    ground2.y = 500 
     ground2.alpha = 0.5
 
     local ground3 = display.newImageRect("images/BG2.png", 150, 1000)
@@ -91,6 +91,11 @@ function gameScene:create(event)
         beat:addEventListener("collision",hit) 
     
     end
+
+    local back = display.newImageRect( "images/back.png", 50 , 50 )
+    back.x = 545 
+    back.y = 50
+    back.alpha= 1.0
 
     local switch2=0
     local act = function(event)
