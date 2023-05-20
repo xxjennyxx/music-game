@@ -1,5 +1,10 @@
 local composer = require("composer") -- 用於創建場景
+<<<<<<< Updated upstream
 local startScreen = composer.newScene()
+=======
+local scene = composer.newScene()
+local click=audio.loadStream("images/shoot2.mp3")
+>>>>>>> Stashed changes
 
 function startScreen:create(event)
     local sceneGroup = self.view
@@ -36,13 +41,24 @@ function startScreen:create(event)
     })
     startButtonText:setFillColor(1, 1, 1)
     sceneGroup:insert(startButtonText)
+    
+
 
     -- 點擊開始遊戲按鈕的事件處理函式
     local function startGame(event)
+
         if event.phase == "ended" then
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
+<<<<<<< Updated upstream
             composer.gotoScene("gameScene", { effect = "fade", time = 500 })
+=======
+            audio.play(click,{channel=1,loops=0})
+            audio.setVolume(0.2,{channel=1})
+            composer.removeScene("scene")
+            composer.gotoScene("select")
+
+>>>>>>> Stashed changes
         end
     end
 
