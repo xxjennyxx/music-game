@@ -38,7 +38,7 @@ function scene:create(event)
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
 			composer.removeScene("scene")
-            composer.gotoScene("select")
+            composer.gotoScene("select", { effect = "fade", time = 500 })
         end
     end
 

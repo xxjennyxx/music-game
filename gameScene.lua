@@ -14,8 +14,10 @@ composer.removeScene("startScreen")
     physics.start()
     physics.setGravity(0, 10) --beats acceleration 
 
-    local speedsetting = 1500 --beats dropped speed
-    local hitbox = 30 --hitbox
+    local speedsetting = 1500 --beats dropped speed default=1500
+    local hitbox_speed = 10 --hitbox_speed default=10
+	local hitbox_range = 1 --hitbox_range default=1
+	local hitbox_location = 410 --hitbox_location default=410
     local combo_num = 0
 
     local bound = display.newImageRect("images/line.png", 650, 15)
@@ -61,60 +63,60 @@ composer.removeScene("startScreen")
         if switch == 0 and event.phase == "began" then
             if event.x>-195 and event.x<-45 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = -120 
-                space.y = 410
-                space.alpha=0.5
+                space.y = hitbox_location
+                space.alpha=0
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground1.alpha=0.8
             end
             
             if event.x>-25 and event.x<125 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 50 
-                space.y = 410
-                space.alpha=0.5
+                space.y = hitbox_location
+                space.alpha=0
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground2.alpha=0.8
             end
             
             if event.x>145 and event.x<295 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 220 
-                space.y = 410
-                space.alpha=0.5
+                space.y = hitbox_location
+                space.alpha=0
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground3.alpha=0.8
             end
             
             if event.x>315 and event.x<465 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 390 
-                space.y = 410
-                space.alpha=0.5
+                space.y = hitbox_location
+                space.alpha=0
                 local function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground4.alpha=0.8
             end
@@ -181,16 +183,16 @@ composer.removeScene("startScreen")
                 ground2.alpha=0.5
                 ground3.alpha=0.5
                 ground4.alpha=0.5
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = -120 
                 space.y = 450
-                space.alpha=0.5
+                space.alpha=0
 
                 local function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})            
                 switch2=1
             end
@@ -200,16 +202,16 @@ composer.removeScene("startScreen")
                 ground2.alpha=0.8
                 ground3.alpha=0.5
                 ground4.alpha=0.5
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 50
                 space.y = 450
-                space.alpha=0.5
+                space.alpha=0
                 
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})            
                 switch2=1
             end
@@ -219,16 +221,16 @@ composer.removeScene("startScreen")
                 ground2.alpha=0.5
                 ground3.alpha=0.8
                 ground4.alpha=0.5
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 220
                 space.y = 450
-                space.alpha=0.5
+                space.alpha=0
                 
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})            
                 switch2=1
             end
@@ -238,16 +240,16 @@ composer.removeScene("startScreen")
                 ground2.alpha=0.5
                 ground3.alpha=0.5
                 ground4.alpha=0.8
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 390 
                 space.y = 450
-                space.alpha=0.5
+                space.alpha=0
                 
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})   
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})   
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})         
                 switch2=1
             end
