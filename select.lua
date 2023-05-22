@@ -9,7 +9,8 @@ function scene:create(event)
 	local pos_mid,pos_right1,pos_right2,pos_left1,pos_left2
 	local pos_easy,pos_hard,pos_normal
 	local sceneGroup = self.view
-
+	local slide_time = 200 --default=200
+	local s_slide_time = 300 --default=300
 	local background = display.newImageRect("images/Floral.png", 1000, 480)
 	background.x=150
 	background.y=240
@@ -82,11 +83,11 @@ function scene:create(event)
 			middle=1
 		end
 
-		transition.to(pos_left2, {time=90, x=pos_left2.x-30, y=pos_left2.y+15,xScale=0.1,yScale=0.1,otation=0}) 
-		transition.to(pos_left1, {time=90, x=pos_left1.x-110, y=pos_left1.y+20,xScale=0.3,yScale=0.3,otation=0}) 
-		transition.to(pos_mid, {time=90, x=pos_mid.x-260, y=pos_mid.y+70,xScale=0.3,yScale=0.3,otation=0})
-		transition.to(pos_right1, {time=90, x=pos_right1.x-260, y=pos_right1.y-70,xScale=3,yScale=3,otation=0})
-		transition.to(pos_right2, {time=90, x=pos_right2.x-110, y=pos_right2.y-20,xScale=3,yScale=3,otation=0})
+		transition.to(pos_left2, {time=slide_time, x=pos_left2.x-30, y=pos_left2.y+15,xScale=0.1,yScale=0.1,otation=0}) 
+		transition.to(pos_left1, {time=slide_time, x=pos_left1.x-110, y=pos_left1.y+20,xScale=0.3,yScale=0.3,otation=0}) 
+		transition.to(pos_mid, {time=slide_time, x=pos_mid.x-260, y=pos_mid.y+70,xScale=0.3,yScale=0.3,otation=0})
+		transition.to(pos_right1, {time=slide_time, x=pos_right1.x-260, y=pos_right1.y-70,xScale=3,yScale=3,otation=0})
+		transition.to(pos_right2, {time=slide_time, x=pos_right2.x-110, y=pos_right2.y-20,xScale=3,yScale=3,otation=0})
 		local function clear()
 			pos_left2:removeSelf()
 			pos_left2= nil 
@@ -152,7 +153,7 @@ function scene:create(event)
 		sceneGroup:insert(pos_left2)
 		end
 		
-		timer.performWithDelay( 100, clear,1 )
+		timer.performWithDelay( slide_time+10, clear,1 )
 		
 	end
 
@@ -166,11 +167,11 @@ function scene:create(event)
 			middle=total
 		end
 
-		transition.to(pos_left2, {time=90, x=pos_left2.x+110, y=pos_left2.y-20,xScale=3,yScale=3,otation=0}) 
-		transition.to(pos_left1, {time=90, x=pos_left1.x+260, y=pos_left1.y-70,xScale=3,yScale=3,otation=0}) 
-		transition.to(pos_mid, {time=90, x=pos_mid.x+260, y=pos_mid.y+70,xScale=0.3,yScale=0.3,otation=0})
-		transition.to(pos_right1, {time=90, x=pos_right1.x+110, y=pos_right1.y+20,xScale=0.3,yScale=0.3,otation=0})
-		transition.to(pos_right2, {time=90, x=pos_right2.x+30, y=pos_right2.y+15,xScale=0.1,yScale=0.1,otation=0})
+		transition.to(pos_left2, {time=slide_time, x=pos_left2.x+110, y=pos_left2.y-20,xScale=3,yScale=3,otation=0}) 
+		transition.to(pos_left1, {time=slide_time, x=pos_left1.x+260, y=pos_left1.y-70,xScale=3,yScale=3,otation=0}) 
+		transition.to(pos_mid, {time=slide_time, x=pos_mid.x+260, y=pos_mid.y+70,xScale=0.3,yScale=0.3,otation=0})
+		transition.to(pos_right1, {time=slide_time, x=pos_right1.x+110, y=pos_right1.y+20,xScale=0.3,yScale=0.3,otation=0})
+		transition.to(pos_right2, {time=slide_time, x=pos_right2.x+30, y=pos_right2.y+15,xScale=0.1,yScale=0.1,otation=0})
 		local function clear()
 			pos_left2:removeSelf()
 			pos_left2= nil 
@@ -236,7 +237,7 @@ function scene:create(event)
 		sceneGroup:insert(pos_left2)
 		end
 		
-		timer.performWithDelay( 100, clear,1 )
+		timer.performWithDelay( slide_time+10, clear,1 )
 		
 	end
 
@@ -248,7 +249,7 @@ function scene:create(event)
 			pos_right2.alpha=0.2
 			pos_left1.alpha=0.2
 			pos_left2.alpha=0.2
-			transition.to(pos_mid, {time=100, x=pos_mid.x-240, y=pos_mid.y-120,rotation=0})
+			transition.to(pos_mid, {time=s_slide_time, x=pos_mid.x-240, y=pos_mid.y-120,rotation=0})
 			
 			pos_easy = display.newImageRect("images/easy.png", 120, 75)
 			pos_easy.x=360
