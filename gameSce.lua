@@ -1,6 +1,6 @@
 local backgroundmusic=audio.loadStream("images/test.wav") --stage music
-audio.play(backgroundmusic,{channel=2,loops=1})
-audio.setVolume(0.2,{channel=2})
+audio.play(backgroundmusic,{channel=1,loops=1})
+audio.setVolume(0.2,{channel=1})
 
 local movieclip = require("movieclip")
 local physics = require "physics"
@@ -49,12 +49,6 @@ local ground4 = display.newImageRect( "images/BG1.png", 150, 1000 )
 ground4.x = 390 
 ground4.y = 500
 ground4.alpha= 0.5
-
-local back = display.newImageRect( "images/back.png", 50, 50 )
-back.x = 545 
-back.y = 50
-back.alpha= 1.0
-
 
 
 local switch2=0

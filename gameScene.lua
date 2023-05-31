@@ -1,9 +1,8 @@
 local composer = require("composer")
-local gameScene = composer.newScene()
-
-function gameScene:create(event)
+local scene = composer.newScene()
+function scene:create(event)
+composer.removeScene("startScreen")
     local sceneGroup = self.view
-
     local backgroundmusic = audio.loadStream("images/test.wav")
     audio.play(backgroundmusic, { channel = 1, loops = 1 })
     audio.setVolume(0.2, { channel = 1 })
@@ -15,8 +14,10 @@ function gameScene:create(event)
     physics.start()
     physics.setGravity(0, 10) --beats acceleration 
 
-    local speedsetting = 1500 --�����t�סA�V�p�V��
-    local hitbox = 30 --hitbox
+    local speedsetting = 1500 --beats dropped speed default=1500
+    local hitbox_speed = 10 --hitbox_speed default=10
+	local hitbox_range = 1 --hitbox_range default=1
+	local hitbox_location = 410 --hitbox_location default=410
     local combo_num = 0
 
     local bound = display.newImageRect("images/line.png", 650, 15)
@@ -43,7 +44,7 @@ function gameScene:create(event)
 
     local ground2 = display.newImageRect("images/BG3.png", 150, 1000)
     ground2.x = 50
-    ground2.y = 500 
+    ground2.y = 500
     ground2.alpha = 0.5
 
     local ground3 = display.newImageRect("images/BG2.png", 150, 1000)
@@ -55,47 +56,6 @@ function gameScene:create(event)
     ground4.x = 390
     ground4.y = 500
     ground4.alpha = 0.5
-    local function produce_beat(ground_num)
-        local x=0
-        local y=-60
-        if ground_num == 1 then
-            x=-120
-        end
-        if ground_num == 2 then
-            x=50
-        end
-        if ground_num == 3 then
-            x=220
-        end
-        if ground_num == 4 then
-            x=390
-        end
-        local beat = display.newImageRect( "images/gear2.png", 60, 60 )
-                beat.x = x
-                beat.y = y
-                beat.alpha=0.8
-                transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=360,onComplete=miss}) 
-            local function miss()
-                combo_num=-1
-                combo_score.text=combo_num                        
-            end     
-                
-            local function hit()
-                combo_num=combo_num+1
-                combo_score.text=combo_num
-                beat:removeSelf()
-                beat= nil 
-            end
-            physics.addBody(beat,"dymatic") 
-        bound:addEventListener("collision",miss) 
-        beat:addEventListener("collision",hit) 
-    
-    end
-
-    local back = display.newImageRect( "images/back.png", 50 , 50 )
-    back.x = 545 
-    back.y = 50
-    back.alpha= 1.0
 
     local switch2=0
     local act = function(event)
@@ -103,60 +63,60 @@ function gameScene:create(event)
         if switch == 0 and event.phase == "began" then
             if event.x>-195 and event.x<-45 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = -120 
-                space.y = 410
+                space.y = hitbox_location
                 space.alpha=0
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground1.alpha=0.8
             end
             
             if event.x>-25 and event.x<125 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 50 
-                space.y = 410
+                space.y = hitbox_location
                 space.alpha=0
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground2.alpha=0.8
             end
             
             if event.x>145 and event.x<295 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 220 
-                space.y = 410
+                space.y = hitbox_location
                 space.alpha=0
                 local  function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground3.alpha=0.8
             end
             
             if event.x>315 and event.x<465 and switch==0 then
                 switch=1
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 390 
-                space.y = 410
+                space.y = hitbox_location
                 space.alpha=0
                 local function del()
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})
                 ground4.alpha=0.8
             end
@@ -223,7 +183,7 @@ function gameScene:create(event)
                 ground2.alpha=0.5
                 ground3.alpha=0.5
                 ground4.alpha=0.5
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = -120 
                 space.y = 450
                 space.alpha=0
@@ -232,7 +192,7 @@ function gameScene:create(event)
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})            
                 switch2=1
             end
@@ -242,7 +202,7 @@ function gameScene:create(event)
                 ground2.alpha=0.8
                 ground3.alpha=0.5
                 ground4.alpha=0.5
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 50
                 space.y = 450
                 space.alpha=0
@@ -251,7 +211,7 @@ function gameScene:create(event)
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})            
                 switch2=1
             end
@@ -261,7 +221,7 @@ function gameScene:create(event)
                 ground2.alpha=0.5
                 ground3.alpha=0.8
                 ground4.alpha=0.5
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 220
                 space.y = 450
                 space.alpha=0
@@ -270,7 +230,7 @@ function gameScene:create(event)
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})            
                 switch2=1
             end
@@ -280,7 +240,7 @@ function gameScene:create(event)
                 ground2.alpha=0.5
                 ground3.alpha=0.5
                 ground4.alpha=0.8
-                local space = display.newImageRect( "images/crate.png", 100, 30 )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 390 
                 space.y = 450
                 space.alpha=0
@@ -289,16 +249,54 @@ function gameScene:create(event)
                     space:removeSelf()
                     space= nil                                
                 end   
-                transition.to(space, {time=hitbox, x=space.x, y=space.y+30, rotation=0,onComplete=del})   
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})   
                 physics.addBody(space,"static",{density=1,friction=0,bounce=0})         
                 switch2=1
             end
         end
+
     end
 
+        function produce_beat(ground_num)
+            local x=0
+            local y=-60
+            if ground_num == 1 then
+                x=-120
+            end
+            if ground_num == 2 then
+                x=50
+            end
+            if ground_num == 3 then
+                x=220
+            end
+            if ground_num == 4 then
+                x=390
+            end
+            local beat = display.newImageRect( "images/gear2.png", 60, 60 )
+                    beat.x = x
+                    beat.y = y
+                    beat.alpha=0.8
+                    transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=360,onComplete=miss}) 
+                local function miss()
+                    combo_num=-1
+                    combo_score.text=combo_num                        
+                end     
+                    
+                local function hit()
+                    combo_num=combo_num+1
+                    combo_score.text=combo_num
+                    beat:removeSelf()
+                    beat= nil 
+                end
+                physics.addBody(beat,"dymatic") 
+            bound:addEventListener("collision",miss) 
+            beat:addEventListener("collision",hit) 
+        
+        end
+        
     Runtime:addEventListener( "touch", act)
 
-    --�Э�
+    -- sheet music
     timer.performWithDelay( 400, function() produce_beat(1) end,1 )
     timer.performWithDelay( 780, function() produce_beat(2) end,1 )
     timer.performWithDelay( 1160, function() produce_beat(3) end,1 )
@@ -312,6 +310,5 @@ function gameScene:create(event)
     timer.performWithDelay( 5140, function() produce_beat(2) end,1 )
 end
 
-gameScene:addEventListener("create", gameScene)
-
-return gameScene
+scene:addEventListener( "create", scene )
+return scene
