@@ -1,0 +1,526 @@
+local composer = require("composer")
+local scene = composer.newScene()
+function scene:create(event)
+composer.removeScene("startScreen")
+    local sceneGroup = self.view
+	local background = display.newImageRect("images/bgt1.png", 1000, 480)
+	background.x=150
+	background.y=240
+    sceneGroup:insert(background)
+    local backgroundmusic = audio.loadStream("images/test.wav")
+    audio.play(backgroundmusic, { channel = 2, loops = 0 })
+    audio.setVolume(0.2, { channel = 2 })
+    local movieclip = require("movieclip")
+    local physics = require "physics"
+    math.randomseed(os.time())
+
+    physics.start()
+    physics.setGravity(0, 0) --beats acceleration 
+
+    local speedsetting = 1500 --beats dropped speed default=1500, bigger=easier
+    local hitbox_speed = 10 --hitbox_speed default=10
+	local hitbox_range = 7 --hitbox_range default=1, bigger=easier
+	local hitbox_location = 405 --hitbox_location default=410 
+    local combo_num = 0
+
+    local bound = display.newImageRect("images/line.png", 650, 15)
+    bound.x = 135
+    bound.y = 520
+    bound.alpha = 0.7
+    physics.addBody(bound, "dymatic")
+
+    local combo = display.newImageRect("images/combo.png", 130, 50)
+    combo.x = 550
+    combo.y = 100
+    combo.alpha = 0.7
+    local combo_score = display.newText(sceneGroup, combo_num, 550, 130, native.systemFont, 20)
+
+    local line = display.newImageRect("images/line.png", 650, 15)
+    line.x = 135
+    line.y = 410
+    line.alpha = 0.7
+
+    local ground1 = display.newImageRect("images/BG4.png", 150, 1000)
+    ground1.x = -120
+    ground1.y = 500
+    ground1.alpha = 0.5
+
+    local ground2 = display.newImageRect("images/BG3.png", 150, 1000)
+    ground2.x = 50
+    ground2.y = 500
+    ground2.alpha = 0.5
+
+    local ground3 = display.newImageRect("images/BG2.png", 150, 1000)
+    ground3.x = 220
+    ground3.y = 500
+    ground3.alpha = 0.5
+
+    local ground4 = display.newImageRect("images/BG1.png", 150, 1000)
+    ground4.x = 390
+    ground4.y = 500
+    ground4.alpha = 0.5
+
+    local switch2=0
+    local act = function(event)
+        local switch=0
+        if switch == 0 and event.phase == "began" then
+            if event.x>-195 and event.x<-45 and switch==0 then
+                switch=1
+				
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = -120 
+                space.y = hitbox_location
+                space.alpha=0
+				
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil          
+					end					
+                end   
+				
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                physics.addBody(space,"dymatic")
+                ground1.alpha=0.8
+				
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = -120
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+            
+            if event.x>-25 and event.x<125 and switch==0 then
+                switch=1
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = 50 
+                space.y = hitbox_location
+                space.alpha=0
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil             
+					end					
+                end  
+				
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                physics.addBody(space,"dymatic")
+                ground2.alpha=0.8
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = 50
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+					
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+            
+            if event.x>145 and event.x<295 and switch==0 then
+                switch=1
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = 220 
+                space.y = hitbox_location
+                space.alpha=0
+				
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil         
+					end					
+                end  
+				
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
+                physics.addBody(space,"dymatic")
+                ground3.alpha=0.8
+				
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = 220
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+            
+            if event.x>315 and event.x<465 and switch==0 then
+                switch=1
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = 390 
+                space.y = hitbox_location
+                space.alpha=0
+				
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil     
+					end					
+                end  
+				
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
+                physics.addBody(space,"dymatic")
+                ground4.alpha=0.8
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = 390
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+        end
+		
+        if event.phase == "ended" then
+            if event.x>-195 and event.x<-45 and switch==0 then
+                ground1.alpha=0.5
+                switch=0
+            end
+            
+            if event.x>-25 and event.x<125 and switch==0 then
+                ground2.alpha=0.5
+                switch=0
+            end
+            
+            if event.x>145 and event.x<295 and switch==0 then
+                ground3.alpha=0.5
+                switch=0
+            end
+            
+            if event.x>315 and event.x<465 and switch==0 then
+                ground4.alpha=0.5
+                switch=0
+            end
+        end
+		
+        if event.phase == "moved" then
+            if event.x<-195 then
+                switch2=0
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+            end
+            if event.x>-45 and event.x<-25 then
+                switch2=0
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+            end
+            if event.x>125 and event.x<145 then
+                switch2=0
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+            end
+            if event.x>295 and event.x<315 then
+                switch2=0
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+            end        
+            if event.x>465 then
+                switch2=0
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+            end
+            if event.x>-195 and event.x<-45 and switch2==0 then
+                ground1.alpha=0.8
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = -120 
+                space.y = 450
+                space.alpha=0
+
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil   
+					end					
+                end  
+				
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                physics.addBody(space,"dymatic")           
+                switch2=1
+				
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = -120
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+            
+            if event.x>-25 and event.x<125 and switch2==0  then
+                ground1.alpha=0.5
+                ground2.alpha=0.8
+                ground3.alpha=0.5
+                ground4.alpha=0.5
+				
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = 50
+                space.y = 450
+                space.alpha=0
+                
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil   
+					end					
+                end    
+				
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                physics.addBody(space,"dymatic")      
+                switch2=1
+				
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = 50
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+						end
+					end
+				space:addEventListener("collision",hit) 
+            end
+            
+            if event.x>145 and event.x<295 and switch2==0  then
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.8
+                ground4.alpha=0.5
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = 220
+                space.y = 450
+                space.alpha=0
+                
+                local  function del()
+					if space~=nil then
+						space:removeSelf()
+						space= nil    
+					end					
+                end  
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+                physics.addBody(space,"dymatic")
+                switch2=1
+				
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = 220
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+            
+            if event.x>315 and event.x<465 and switch2==0  then
+                ground1.alpha=0.5
+                ground2.alpha=0.5
+                ground3.alpha=0.5
+                ground4.alpha=0.8
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
+                space.x = 390 
+                space.y = 450
+                space.alpha=0
+                
+                local  function del()
+				if space~=nil then
+                    space:removeSelf()
+                    space= nil 
+						end
+                end   
+                transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})   
+                physics.addBody(space,"dymatic")     
+                switch2=1
+				
+				local function hit()
+					if space~=nil then
+						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						fade.x = 390
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out})  
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						space:removeSelf()
+						space= nil
+					end
+				end
+				space:addEventListener("collision",hit) 
+            end
+        end
+    end
+
+
+	local function produce_beat(ground_num)
+		local x=0
+		local y=-60
+		if ground_num == 1 then
+			x=-120
+		elseif ground_num == 2 then
+			x=50
+		elseif ground_num == 3 then
+			x=220
+		elseif ground_num == 4 then
+			x=390
+		end
+		
+		local beat = display.newImageRect( "images/simple.png", 60, 60 )
+				beat.x = x
+				beat.y = y
+				beat.alpha=0.8
+				transition.to(beat, {time=speedsetting, x=beat.x, y=beat.y+630, rotation=215}) 
+			
+		local function clear(event)
+			beat_x=event.x
+			beat:removeSelf()
+			beat= nil
+			
+		end
+		physics.addBody(beat,"static") 
+		beat:addEventListener("collision",clear)
+	
+	end
+        
+		
+	local function miss(event)
+		local fade2 = display.newImageRect( "images/line2.png", 800, 135 )
+		fade2.x = 145
+		fade2.y = 470
+		fade2.alpha=0
+		
+		local function out()
+		fade2:removeSelf()
+		fade2= nil 
+		end
+		transition.to(fade2, {time=150, x=fade2.x, y=fade2.y,alpha=0.65, rotation=0,xScale=1,yScale=1.4})
+		timer.performWithDelay( 150, function() 
+			transition.to(fade2, {time=150, x=fade2.x, y=fade2.y,alpha=0, rotation=0,xScale=1,yScale=0.7,onComplete=out})  
+			end,1 )
+		
+		combo_num=0
+		combo_score.text=combo_num         
+	end     
+	
+	bound:addEventListener("collision",miss)
+    Runtime:addEventListener( "touch", act)
+
+    -- sheet music
+    timer.performWithDelay( 400, function() produce_beat(1) end,1 )
+    timer.performWithDelay( 780, function() produce_beat(2) end,1 )
+    timer.performWithDelay( 1160, function() produce_beat(3) end,1 )
+    timer.performWithDelay( 1540, function() produce_beat(4) end,1 )
+    timer.performWithDelay( 2140, function() produce_beat(1) end,1 )
+    timer.performWithDelay( 2440, function() produce_beat(2) end,1 )
+    timer.performWithDelay( 3040, function() produce_beat(3) end,1 )
+    timer.performWithDelay( 3840, function() produce_beat(4) end,1 )
+    timer.performWithDelay( 4440, function() produce_beat(1) end,1 )
+    timer.performWithDelay( 5140, function() produce_beat(2) end,1 )
+end
+
+scene:addEventListener( "create", scene )
+return scene
