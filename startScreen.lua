@@ -1,9 +1,12 @@
 local composer = require("composer") -- 用於創建場景
 local scene = composer.newScene()
-
+local sp_music = audio.loadStream("images/shoot.wav")
 function scene:create(event)
     local sceneGroup = self.view
-	
+	local backgroundmusic = audio.loadStream("images/test.wav")
+    audio.play(backgroundmusic, { channel = 1, loops = 10 })
+    audio.setVolume(0.2, { channel = 1 })
+
     -- 設定背景
 	local background = display.newImageRect("images/Floral.png", 1000, 480)
 	background.x=150
@@ -37,8 +40,10 @@ function scene:create(event)
         if event.phase == "ended" then
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
+			audio.play(sp_music, { channel = 3, loops = 0})
+			audio.setVolume(0.05, { channel = 3 })
 			composer.removeScene("scene")
-            composer.gotoScene("select", { effect = "fade", time = 500 })
+            composer.gotoScene("select", { effect = "fade", time = 800 })
         end
     end
 

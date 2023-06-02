@@ -1,7 +1,6 @@
 local composer = require("composer") 
 local scene = composer.newScene()
-
-
+local sp_music = audio.loadStream("images/shoot.wav")
 function scene:create(event)
 	names={"1","2","3","4","5"}
 	local total=5
@@ -268,17 +267,23 @@ function scene:create(event)
 			sceneGroup:insert(pos_hard)
 			
 			local function toscene_easy()
-				
+				audio.fadeOut({channel=1,time=500})
+				audio.play(sp_music, { channel = 3, loops = 0})
+				audio.setVolume(0.05, { channel = 3 })
 				composer.gotoScene("gameScene")
 			end
 			
 			local function toscene_normal()
-				
+				audio.fadeOut({channel=1,time=500})
+				audio.play(sp_music, { channel = 3, loops = 0})
+				audio.setVolume(0.05, { channel = 3 })
 				composer.gotoScene("gameScene")
 			end
 			
 			local function toscene_hard()
-				
+				audio.fadeOut({channel=1,time=500})
+				audio.play(sp_music, { channel = 3, loops = 0})
+				audio.setVolume(0.05, { channel = 3 })
 				composer.gotoScene("gameScene")
 			end
 			
@@ -291,20 +296,27 @@ function scene:create(event)
 
 	local x1=0	
 	local x2=0
+	local y=0
 	local act = function(event)
 
 		local function clear()
-			pos_hard:removeSelf()
-			pos_hard= nil 
-			pos_easy:removeSelf()
-			pos_easy= nil 
-			pos_normal:removeSelf()
-			pos_normal= nil 
+			if pos_hard~=nil then
+				pos_hard:removeSelf()
+				pos_hard= nil 
+				pos_easy:removeSelf()
+				pos_easy= nil 
+				pos_normal:removeSelf()
+				pos_normal= nil 
+			end
 		end
 
 		if event.phase=="began" then
 			x1=event.x
+			y=event.y
 			if switch ==0 and (x1<360 or x1>490) then
+				clear()
+			end
+			if switch ==0 and (x1>360 and x1<490) and (y>400 or y<200) then
 				clear()
 			end
 			
@@ -312,11 +324,10 @@ function scene:create(event)
 		
 		if event.phase=="ended" then
 			x2=event.x
-			if x1-x2>0 then
+			if x1-x2>5 then
 				L_shift(curren_mid)
-
 				switch=1
-			elseif x1-x2<0 then
+			elseif x1-x2<-5 then
 				R_shift(curren_mid)
 				switch=1
 			else if x1<370 and x1>-10 and x2<370 and x2>-10 and switch==1 then
