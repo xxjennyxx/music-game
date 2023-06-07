@@ -3,9 +3,10 @@ local scene = composer.newScene()
 function scene:create(event)
 composer.removeScene("startScreen")
     local sceneGroup = self.view
-	local background = display.newImageRect("images/bgt1.png", 1000, 480)
+	local background = display.newImageRect("images/gamebg.png", 1000, 480)
 	background.x=150
 	background.y=240
+	background.alpha=0.5
     sceneGroup:insert(background)
     local backgroundmusic = audio.loadStream("images/test.wav")
     audio.play(backgroundmusic, { channel = 2, loops = 0 })
@@ -28,7 +29,12 @@ composer.removeScene("startScreen")
     bound.y = 520
     bound.alpha = 0.7
     physics.addBody(bound, "dymatic")
-
+	
+	
+	local combo_s = display.newImageRect("images/combo1.png", 130, 50)
+    combo_s.x = 553
+    combo_s.y = 101
+    combo_s.alpha = 0.7
     local combo = display.newImageRect("images/combo.png", 130, 50)
     combo.x = 550
     combo.y = 100
@@ -43,22 +49,22 @@ composer.removeScene("startScreen")
     local ground1 = display.newImageRect("images/BG4.png", 150, 1000)
     ground1.x = -120
     ground1.y = 500
-    ground1.alpha = 0.5
+    ground1.alpha = 0.65
 
     local ground2 = display.newImageRect("images/BG3.png", 150, 1000)
     ground2.x = 50
     ground2.y = 500
-    ground2.alpha = 0.5
+    ground2.alpha = 0.65
 
     local ground3 = display.newImageRect("images/BG2.png", 150, 1000)
     ground3.x = 220
     ground3.y = 500
-    ground3.alpha = 0.5
+    ground3.alpha = 0.65
 
     local ground4 = display.newImageRect("images/BG1.png", 150, 1000)
     ground4.x = 390
     ground4.y = 500
-    ground4.alpha = 0.5
+    ground4.alpha = 0.65
 
     local switch2=0
     local act = function(event)
@@ -67,7 +73,7 @@ composer.removeScene("startScreen")
             if event.x>-195 and event.x<-45 and switch==0 then
                 switch=1
 				
-                local space = display.newImageRect("images/crate.png", 100,  hitbox_range )
+                local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = -120 
                 space.y = hitbox_location
                 space.alpha=0
@@ -81,11 +87,11 @@ composer.removeScene("startScreen")
 				
                 transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"dymatic")
-                ground1.alpha=0.8
+                ground1.alpha=0.9
 				
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = -120
 						fade.y = 410
 						fade.alpha=0.8
@@ -120,10 +126,10 @@ composer.removeScene("startScreen")
 				
                 transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})
                 physics.addBody(space,"dymatic")
-                ground2.alpha=0.8
+                ground2.alpha=0.9
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = 50
 						fade.y = 410
 						fade.alpha=0.8
@@ -160,11 +166,11 @@ composer.removeScene("startScreen")
 				
                 transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
                 physics.addBody(space,"dymatic")
-                ground3.alpha=0.8
+                ground3.alpha=0.9
 				
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = 220
 						fade.y = 410
 						fade.alpha=0.8
@@ -200,10 +206,10 @@ composer.removeScene("startScreen")
 				
                 transition.to(space, {time=hitbox_speed, x=space.x, y=space.y+30, rotation=0,onComplete=del})            
                 physics.addBody(space,"dymatic")
-                ground4.alpha=0.8
+                ground4.alpha=0.9
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = 390
 						fade.y = 410
 						fade.alpha=0.8
@@ -226,22 +232,22 @@ composer.removeScene("startScreen")
 		
         if event.phase == "ended" then
             if event.x>-195 and event.x<-45 and switch==0 then
-                ground1.alpha=0.5
+                ground1.alpha=0.65
                 switch=0
             end
             
             if event.x>-25 and event.x<125 and switch==0 then
-                ground2.alpha=0.5
+                ground2.alpha=0.65
                 switch=0
             end
             
             if event.x>145 and event.x<295 and switch==0 then
-                ground3.alpha=0.5
+                ground3.alpha=0.65
                 switch=0
             end
             
             if event.x>315 and event.x<465 and switch==0 then
-                ground4.alpha=0.5
+                ground4.alpha=0.65
                 switch=0
             end
         end
@@ -249,44 +255,44 @@ composer.removeScene("startScreen")
         if event.phase == "moved" then
             if event.x<-195 then
                 switch2=0
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.65
             end
             if event.x>-45 and event.x<-25 then
                 switch2=0
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.65
             end
             if event.x>125 and event.x<145 then
                 switch2=0
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.65
             end
             if event.x>295 and event.x<315 then
                 switch2=0
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.65
             end        
             if event.x>465 then
                 switch2=0
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.65
             end
             if event.x>-195 and event.x<-45 and switch2==0 then
-                ground1.alpha=0.8
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.9
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.65
                 local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = -120 
                 space.y = 450
@@ -305,7 +311,7 @@ composer.removeScene("startScreen")
 				
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = -120
 						fade.y = 410
 						fade.alpha=0.8
@@ -326,10 +332,10 @@ composer.removeScene("startScreen")
             end
             
             if event.x>-25 and event.x<125 and switch2==0  then
-                ground1.alpha=0.5
-                ground2.alpha=0.8
-                ground3.alpha=0.5
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.9
+                ground3.alpha=0.65
+                ground4.alpha=0.65
 				
                 local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 50
@@ -349,7 +355,7 @@ composer.removeScene("startScreen")
 				
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = 50
 						fade.y = 410
 						fade.alpha=0.8
@@ -370,10 +376,10 @@ composer.removeScene("startScreen")
             end
             
             if event.x>145 and event.x<295 and switch2==0  then
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.8
-                ground4.alpha=0.5
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.9
+                ground4.alpha=0.65
                 local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 220
                 space.y = 450
@@ -391,7 +397,7 @@ composer.removeScene("startScreen")
 				
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = 220
 						fade.y = 410
 						fade.alpha=0.8
@@ -412,10 +418,10 @@ composer.removeScene("startScreen")
             end
             
             if event.x>315 and event.x<465 and switch2==0  then
-                ground1.alpha=0.5
-                ground2.alpha=0.5
-                ground3.alpha=0.5
-                ground4.alpha=0.8
+                ground1.alpha=0.65
+                ground2.alpha=0.65
+                ground3.alpha=0.65
+                ground4.alpha=0.9
                 local space = display.newImageRect( "images/crate.png", 100,  hitbox_range )
                 space.x = 390 
                 space.y = 450
@@ -433,7 +439,7 @@ composer.removeScene("startScreen")
 				
 				local function hit()
 					if space~=nil then
-						local fade = display.newImageRect( "images/image.png", 60, 60 )
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
 						fade.x = 390
 						fade.y = 410
 						fade.alpha=0.8
