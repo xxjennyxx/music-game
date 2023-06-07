@@ -1,13 +1,34 @@
 local composer = require("composer")
 local scene = composer.newScene()
+local movieclip = require("movieclip")
+local feverset=3
 function scene:create(event)
 composer.removeScene("startScreen")
     local sceneGroup = self.view
-	local background = display.newImageRect("images/gamebg.png", 1000, 480)
+	local Forest =  movieclip.newAnim({"images/a1.png","images/a2.png","images/a3.png"})
+	--Forest:play({startFrame=1,endFrame=9,loop=-1,remove=false})
+    Forest.x,Forest.y = 150,240 --位置
+	Forest.alpha=0.92
+	sceneGroup:insert(Forest)
+	local function callNextFrame()
+		Forest:nextFrame()
+	end
+	timer.performWithDelay(400,callNextFrame,-1)
+	
+	local fevertoken = display.newImageRect("images/fevertoken.png", 75, 75)
+	fevertoken.x=552
+	fevertoken.y=128
+	fevertoken.alpha=0
+    sceneGroup:insert(fevertoken)
+	
+	local background = display.newImageRect("images/gamebg2.png", 1000, 480)
 	background.x=150
 	background.y=240
-	background.alpha=0.5
+	background.alpha=1
     sceneGroup:insert(background)
+	
+	
+	
     local backgroundmusic = audio.loadStream("images/test.wav")
     audio.play(backgroundmusic, { channel = 2, loops = 0 })
     audio.setVolume(0.2, { channel = 2 })
@@ -23,7 +44,8 @@ composer.removeScene("startScreen")
 	local hitbox_range = 7 --hitbox_range default=1, bigger=easier
 	local hitbox_location = 405 --hitbox_location default=410 
     local combo_num = 0
-
+	local score = 0
+	
     local bound = display.newImageRect("images/line.png", 650, 15)
     bound.x = 135
     bound.y = 520
@@ -39,7 +61,13 @@ composer.removeScene("startScreen")
     combo.x = 550
     combo.y = 100
     combo.alpha = 0.7
-    local combo_score = display.newText(sceneGroup, combo_num, 550, 130, native.systemFont, 20)
+    local combo_score = display.newText(sceneGroup, combo_num, 550, 132, "images/as.ttf", 17)
+
+	local score_s = display.newImageRect("images/score.png", 130, 50)
+    score_s.x = 555
+    score_s.y = 280
+    score_s.alpha = 0.7
+	local score_show = display.newText(sceneGroup, score, 555, 314, "images/as.ttf", 17)
 
     local line = display.newImageRect("images/line.png", 650, 15)
     line.x = 135
@@ -104,6 +132,12 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})  
+						end
 						space:removeSelf()
 						space= nil
 					end
@@ -143,6 +177,12 @@ composer.removeScene("startScreen")
 					
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
 						space:removeSelf()
 						space= nil
 					end
@@ -183,6 +223,12 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
 						space:removeSelf()
 						space= nil
 					end
@@ -222,6 +268,12 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
 						space:removeSelf()
 						space= nil
 					end
@@ -324,6 +376,12 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
 						space:removeSelf()
 						space= nil
 					end
@@ -368,6 +426,12 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
 						space:removeSelf()
 						space= nil
 						end
@@ -410,6 +474,12 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
 						space:removeSelf()
 						space= nil
 					end
@@ -452,6 +522,14 @@ composer.removeScene("startScreen")
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out})  
 						combo_num=combo_num+1
 						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})
+						end
+						
 						space:removeSelf()
 						space= nil
 					end
@@ -509,6 +587,8 @@ composer.removeScene("startScreen")
 			end,1 )
 		
 		combo_num=0
+		transition.to(background, {time=350, x=background.x, y=background.y,alpha=1, rotation=0,xScale=1,yScale=1})  
+		transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=0, rotation=0,xScale=1,yScale=1})
 		combo_score.text=combo_num         
 	end     
 	
