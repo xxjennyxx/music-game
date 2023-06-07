@@ -7,7 +7,7 @@ composer.removeScene("startScreen")
 	background.x=150
 	background.y=240
 	background.alpha=0.5
-    sceneGroup:insert(background)
+    sceneGroup:insert(background) 
     local backgroundmusic = audio.loadStream("images/test.wav")
     audio.play(backgroundmusic, { channel = 2, loops = 0 })
     audio.setVolume(0.2, { channel = 2 })
