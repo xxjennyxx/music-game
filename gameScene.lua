@@ -5,10 +5,12 @@ local feverset=3
 function scene:create(event)
 composer.removeScene("startScreen")
     local sceneGroup = self.view
+	local switch3=0
+	local spacel
 	local Forest =  movieclip.newAnim({"images/a1.png","images/a2.png","images/a3.png"})
 	--Forest:play({startFrame=1,endFrame=9,loop=-1,remove=false})
     Forest.x,Forest.y = 150,240 --位置
-	Forest.alpha=0.92
+	Forest.alpha=0.96
 	sceneGroup:insert(Forest)
 	local function callNextFrame()
 		Forest:nextFrame()
@@ -97,7 +99,64 @@ composer.removeScene("startScreen")
     local switch2=0
     local act = function(event)
         local switch=0
-        if switch == 0 and event.phase == "began" then
+
+		if switch3 ==1 and event.phase == "began" then
+			spacel = display.newImageRect( "images/crate.png", 100,  hitbox_range*5 )
+			if event.x>-195 and event.x<-45 then
+				spacel.x = -120
+			elseif event.x>-25 and event.x<125 then
+				spacel.x = 50
+			elseif event.x>145 and event.x<295 then
+				spacel.x = 220
+			elseif event.x>315 and event.x<465 then
+				spacel.x = 390
+			end
+			spacel.y = hitbox_location
+			spacel.alpha=0
+			local  function del()
+				if spacel~=nil then
+					spacel:removeSelf()
+					spacel= nil          
+				end					
+			end   
+			local function hit()
+					if spacel~=nil then
+						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						if event.x>-195 and event.x<-45 then
+							fade.x = -120
+						elseif event.x>-25 and event.x<125 then
+							fade.x = 50
+						elseif event.x>145 and event.x<295 then
+							fade.x = 220
+						elseif event.x>315 and event.x<465 then
+							fade.x = 390
+						end
+						fade.y = 410
+						fade.alpha=0.8
+						
+						local function out()
+						fade:removeSelf()
+						fade= nil 
+						end
+						
+						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
+						combo_num=combo_num+1
+						combo_score.text=combo_num
+						score=score+100+combo_num+feverset*5
+						score_show.text=score
+						if combo_num>feverset then
+							transition.to(background, {time=350, x=background.x, y=background.y,alpha=0, rotation=0,xScale=1,yScale=1})  
+							transition.to(fevertoken, {time=350, x=fevertoken.x, y=fevertoken.y,alpha=1, rotation=0,xScale=1,yScale=1})  
+						end
+					end
+				end
+				physics.addBody(spacel,"dymatic")
+			spacel:addEventListener("collision",hit) 
+			--transition.to(space, {time=hitbox_speed*10, x=space.x, y=space.y+30, rotation=0,onComplete=del})
+
+		
+		
+        elseif switch == 0 and event.phase == "began" then
             if event.x>-195 and event.x<-45 and switch==0 then
                 switch=1
 				
@@ -537,6 +596,12 @@ composer.removeScene("startScreen")
 				space:addEventListener("collision",hit) 
             end
         end
+		if switch3 ==1 and event.phase == "ended" then
+			if spacel~=nil then
+				spacel:removeSelf()
+				spacel= nil
+			end
+		end
     end
 
 
@@ -571,6 +636,72 @@ composer.removeScene("startScreen")
 	end
         
 		
+	local function produce_long_beat(ground_num,hitpoint)
+		local x=0
+		local y=-60
+		local beati={}
+		if ground_num == 1 then
+			x=-120
+		elseif ground_num == 2 then
+			x=50
+		elseif ground_num == 3 then
+			x=220
+		elseif ground_num == 4 then
+			x=390
+		end
+		hitpoint=hitpoint
+		
+		local beat_begin = display.newImageRect( "images/l1.png", 60, 60 )
+				switch3=1
+				beat_begin.x = x
+				beat_begin.y = y
+				beat_begin.alpha=0.8
+				transition.to(beat_begin, {time=speedsetting*20, x=beat_begin.x, y=beat_begin.y+12600, rotation=0}) 
+		
+		for i=1,hitpoint-2 do
+			beati[i] = display.newImageRect( "images/ll.png", 60, 60 )
+			beati[i].x = x
+			beati[i].y = y-60*i
+			beati[i].alpha=0.8
+			transition.to(beati[i], {time=speedsetting*20, x=beati[i].x, y=beati[i].y+12600, rotation=0}) 
+		end
+		
+		local beat_end = display.newImageRect( "images/l2.png", 60, 60 )
+				beat_end.x = x
+				beat_end.y = y-60*(hitpoint-1)
+				beat_end.alpha=0.8
+				transition.to(beat_end, {time=speedsetting*20, x=beat_end.x, y=beat_end.y+12600, rotation=0}) 
+			
+		local function clear_begin(event)
+			beat_begin:removeSelf()
+			beat_begin= nil
+		end
+		local function clear_end(event)
+			switch3=0
+			if spacel~=nil then
+				spacel:removeSelf()
+				spacel= nil
+			end
+			beat_end:removeSelf()
+			beat_end= nil
+		end
+		local function clear_i(i)
+			beati[i]:removeSelf()
+			beati[i]= nil
+		end
+		
+		physics.addBody(beat_begin,"static") 
+		physics.addBody(beat_end,"static") 
+		
+		beat_begin:addEventListener("collision",clear_begin)
+		beat_end:addEventListener("collision",clear_end)
+		for i=1,hitpoint-2 do
+			physics.addBody(beati[i],"static") 
+			beati[i]:addEventListener("collision",function() clear_i(i) end)
+		end
+	
+	end
+		
 	local function miss(event)
 		local fade2 = display.newImageRect( "images/line2.png", 800, 135 )
 		fade2.x = 145
@@ -598,9 +729,10 @@ composer.removeScene("startScreen")
     -- sheet music
     timer.performWithDelay( 400, function() produce_beat(1) end,1 )
     timer.performWithDelay( 780, function() produce_beat(2) end,1 )
-    timer.performWithDelay( 1160, function() produce_beat(3) end,1 )
-    timer.performWithDelay( 1540, function() produce_beat(4) end,1 )
-    timer.performWithDelay( 2140, function() produce_beat(1) end,1 )
+	timer.performWithDelay( 980, function() produce_long_beat(3,4) end,1 )
+    --timer.performWithDelay( 1160, function() produce_beat(3) end,1 )
+    --timer.performWithDelay( 1540, function() produce_beat(4) end,1 )
+    --timer.performWithDelay( 2140, function() produce_beat(1) end,1 )
     timer.performWithDelay( 2440, function() produce_beat(2) end,1 )
     timer.performWithDelay( 3040, function() produce_beat(3) end,1 )
     timer.performWithDelay( 3840, function() produce_beat(4) end,1 )

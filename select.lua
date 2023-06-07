@@ -18,7 +18,7 @@ function scene:create(event)
 	local background = display.newImageRect("images/234.jpg", 1000, 480)
 	background.x=150
 	background.y=240
-	background.alpha=0.4
+	background.alpha=0.5
     sceneGroup:insert(background)
 	function song_display(middle)
 		if middle-1 == 0 then
