@@ -1,5 +1,5 @@
 BUG修正:  
-1.attemp to nil value
+1.attemp to nil value  
 2.長按打點遺失
 
 調整:  
@@ -11,4 +11,5 @@ BUG修正:
 6.加入New High紀錄(打出新高分時顯示)  
 7.場景切換大致完成(返回選單功能實現)  
 8.加入template scene作為歌曲選單與成就的選取場景  
+9.結算畫面完成(顯示分數和combo)  
 
