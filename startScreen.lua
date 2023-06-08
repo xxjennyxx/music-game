@@ -3,10 +3,9 @@ local scene = composer.newScene()
 local sp_music = audio.loadStream("images/shoot.wav")
 local enter = display.newText("Touch to enter game", 170, 310, "images/as.ttf", 13)
 function scene:create(event)
+	composer.removeHidden()
     local sceneGroup = self.view
-	local backgroundmusic = audio.loadStream("images/mbgm.mp3")
-    audio.play(backgroundmusic, { channel = 1, loops = 10 })
-    audio.setVolume(0.2, { channel = 1 })
+
 
     -- 設定背景
 	local background = display.newImageRect("images/234.jpg", 1000, 480)
@@ -63,8 +62,9 @@ function scene:create(event)
 			audio.play(sp_music, { channel = 3, loops = 0})
 			audio.setVolume(0.05, { channel = 3 })
 			Runtime:removeEventListener( "touch", startGame )
-			composer.removeScene("scene")
-            composer.gotoScene("select", { effect = "fade", time = 800 })
+			
+			
+            composer.gotoScene("template", { effect = "fade", time = 00 })
         end
     end
 

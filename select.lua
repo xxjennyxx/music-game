@@ -3,15 +3,17 @@ local scene = composer.newScene()
 local sp_music = audio.loadStream("images/shoot.wav")
 local a =12
 local b= 6
-function scene:create(event)
-	names={"11","22","33","11","22","33"}
-	local total=6
+	local total=8
 	local left1,lef2,right1,right2
 	local pos_mid_s,pos_right1_s,pos_right2_s,pos_left1_s,pos_left2_s
 	local pos_mid,pos_right1,pos_right2,pos_left1,pos_left2
 	
 	local pos_easy,pos_hard
 	local pos_easy_s,pos_hard_s
+function scene:create(event)
+composer.removeHidden()
+	names={"00","11","22","33","00","11","22","33"}
+
 	local sceneGroup = self.view
 	local slide_time = 200 --default=200
 	local s_slide_time = 300 --default=300
@@ -378,14 +380,18 @@ function scene:create(event)
 				audio.fadeOut({channel=1,time=500})
 				audio.play(sp_music, { channel = 3, loops = 0})
 				audio.setVolume(0.05, { channel = 3 })
-				composer.gotoScene("gameScene")
+				Runtime:removeEventListener( "touch", act )
+				composer.removeScene("select")
+				composer.gotoScene("gameScene"..names[curren_mid].."_1")
 			end
 			
 			local function toscene_hard()
 				audio.fadeOut({channel=1,time=500})
 				audio.play(sp_music, { channel = 3, loops = 0})
 				audio.setVolume(0.05, { channel = 3 })
-				composer.gotoScene("gameScene")
+				Runtime:removeEventListener( "touch", act )
+				composer.removeScene("select")
+				composer.gotoScene("gameScene"..names[curren_mid].."_2")
 			end
 			
 			pos_easy:addEventListener( "touch", toscene_easy)
@@ -447,9 +453,11 @@ function scene:create(event)
 			end
 		end
 	end
-
-	Runtime:addEventListener( "touch", act)
-end
+	background:addEventListener( "touch", act)
+	end
 
 scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
 return scene
