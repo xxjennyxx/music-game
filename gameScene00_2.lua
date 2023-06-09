@@ -840,10 +840,12 @@ composer.removeHidden()
 			str=str..v..","
 			end
 			str=str.."}\nreturn achieve"
-			file=io.open("save.lua","w")
-			file:write(str)
-			file:close()
+			local path=system.pathForFile("save.lua", system.DocumentsDirectory)
+			local file = io.open(path,"w")
+  			file:write(str)
+  			file:close()
 		end
+		
 		if score>=highest[gameid] then
 			highest[gameid]=score
 			str2="highest={"
@@ -851,7 +853,9 @@ composer.removeHidden()
 			str2=str2..v..","
 			end
 			str2=str2.."}\nreturn highest"
-			file2=io.open("save_high.lua","w")
+			
+			local path2=system.pathForFile("save_high.lua", system.DocumentsDirectory)
+			local file2=io.open(path2,"w")
 			file2:write(str2)
 			file2:close()
 		end
@@ -908,11 +912,11 @@ composer.removeHidden()
 			fc.x=ssx
 			fc.y=ssy+240
 			fc.alpha=0.1
-			transition.to(fc, {time=800, x=fc.x, y=fc.y, alpha=1,rotation=0,xScale=0.4,yScale=0.4}) 
+			transition.to(fc, {time=800, x=fc.x, y=fc.y, alpha=1,rotation=0,xScale=0.2,yScale=0.2}) 
 			sceneGroup:insert(fc)			
 		end
 		
-		if score>=record then
+		if score>record then
 			local view=	display.newText("( New High )",380, 200, "images/as.ttf", 16)
 			sceneGroup:insert(view)		
 		end
