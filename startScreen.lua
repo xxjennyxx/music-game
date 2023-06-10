@@ -1,6 +1,6 @@
 local composer = require("composer") -- 用於創建場景
 local scene = composer.newScene()
-local sp_music = audio.loadStream("images/shoot.wav")
+local sp_music = audio.loadStream("images/guitar7.mp3")
 local enter = display.newText("Touch to enter game", 170, 310, "images/as.ttf", 13)
 function scene:create(event)
 	composer.removeHidden()
@@ -60,7 +60,7 @@ function scene:create(event)
             -- 在這裡執行開始遊戲的相關邏輯
             -- 例如切換到遊戲場景、載入遊戲資源等
 			audio.play(sp_music, { channel = 3, loops = 0})
-			audio.setVolume(0.05, { channel = 3 })
+			audio.setVolume(0.7, { channel = 3 })
 			Runtime:removeEventListener( "touch", startGame )
 			
 			
