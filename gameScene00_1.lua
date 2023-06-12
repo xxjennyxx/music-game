@@ -33,21 +33,18 @@ composer.removeHidden()
 	background.y=240
 	background.alpha=1
     sceneGroup:insert(background)
-	
-	
 	--[[
-    local backgroundmusic = audio.loadStream("images/test.wav")
+    local backgroundmusic = audio.loadStream("images/song1.wav")
     audio.play(backgroundmusic, { channel = 2, loops = 0 })
-    audio.setVolume(0.8, { channel = 2 })
-    local movieclip = require("movieclip")
-    local physics = require "physics"]]--
+    audio.setVolume(1, { channel = 2 })]]--
+
 
     physics.start()
     physics.setGravity(0, 0) --beats acceleration 
 
     local speedsetting = 1500 --beats dropped speed default=1500, bigger=easier
     local hitbox_speed = 10 --hitbox_speed default=10
-	local hitbox_range = 4 --hitbox_range default=1, bigger=easier
+	local hitbox_range = 1--hitbox_range default=1, bigger=easier
 	local hitbox_location = 410 --hitbox_location default=410 
     local combo_num = 0
 	local score = 0
@@ -139,43 +136,33 @@ composer.removeHidden()
 			local function hit()
 					if spacel~=nil then
 					transition.to(spacel, {time=10, x=spacel.x, y=spacel.y-1}) 
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
+
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						if event.x>-195 and event.x<-45 then
 							fade.x = -120
-							fade2.x= -120
 						elseif event.x>-25 and event.x<125 then
 							fade.x = 50
-							fade2.x = 50
 						elseif event.x>145 and event.x<295 then
 							fade.x = 220
-							fade2.x = 220
 						elseif event.x>315 and event.x<465 then
 							fade.x = 390
-							fade2.x = 390
 						end
 						fade.y = 410
 						fade.alpha=0.8
-						fade2.y = 410
-						fade2.alpha=0.8
 						
 						local function out()
 							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
-							if fade2~=nil then
-								fade2:removeSelf()
-								fade2= nil 
-							end
 						end
+
 						
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=0, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
 						score=score+100+combo_num+feverset*5
@@ -215,15 +202,10 @@ composer.removeHidden()
 				
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = -120
 						fade.y = 410
@@ -233,10 +215,6 @@ composer.removeHidden()
 							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
-							end
-							if fade2~=nil then
-								fade2:removeSelf()
-								fade2= nil 
 							end
 						end
 						
@@ -276,23 +254,18 @@ composer.removeHidden()
                 physics.addBody(space,"dymatic")
                 ground2.alpha=1
 				local function hit()
-					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
+					if space~=nil then 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = 50
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
@@ -338,22 +311,17 @@ composer.removeHidden()
 				
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = 220
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
@@ -397,22 +365,17 @@ composer.removeHidden()
                 ground4.alpha=1
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = 390
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
@@ -519,25 +482,20 @@ composer.removeHidden()
 				
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = -120
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
-							end 
+							end
 						end
 						
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
@@ -583,27 +541,22 @@ composer.removeHidden()
 				
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = 50
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
 						end
-						
+
 						transition.to(fade, {time=250, x=fade.x, y=fade.y,alpha=0, rotation=0,xScale=1.2,yScale=1.2,onComplete=out}) 
 						combo_num=combo_num+1
 						combo_score.text=combo_num
@@ -645,22 +598,17 @@ composer.removeHidden()
 				
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = 220
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
@@ -707,22 +655,17 @@ composer.removeHidden()
 				
 				local function hit()
 					if space~=nil then
-						local fade2 = display.newImageRect( "images/hitcg.png", 228, 228 )
-						sceneGroup:insert(fade2)
-						fade2.x=space.x
-						fade2.y=space.y
-						fade2.alpha=1
-						transition.to(fade2, {time=380, x=fade2.x, y=fade2.y,alpha=1, rotation=0,xScale=2,yScale=2,onComplete=out}) 
 						local fade = display.newImageRect( "images/perfect.png", 114, 41 )
+						audio.fadeOut({channel=3,time=1})
 						audio.play(sp_music, { channel = 3, loops = 0})
-						audio.setVolume(0.46, { channel = 3 })
+						audio.setVolume(0.24, { channel = 3 })
 						sceneGroup:insert(fade)
 						fade.x = 390
 						fade.y = 410
 						fade.alpha=0.8
 						
 						local function out()
-						if fade~=nil then
+							if fade~=nil then
 								fade:removeSelf()
 								fade= nil 
 							end
@@ -877,11 +820,17 @@ composer.removeHidden()
 		fade2.alpha=1
 		
 		local function out()
-		if fade2~=nil then
-			fade2:removeSelf()
-			fade2= nil 
-			end
-		end
+							if fade~=nil then
+								fade:removeSelf()
+								fade= nil 
+							end
+						end
+						local function out2()
+							if fade2~=nil then
+								fade2:removeSelf()
+								fade2= nil 
+							end
+						end
 		transition.to(fade2, {time=150, x=fade2.x, y=fade2.y,alpha=0.65, rotation=0,xScale=1,yScale=1.4})
 		timer.performWithDelay( 150, function() 
 			transition.to(fade2, {time=150, x=fade2.x, y=fade2.y,alpha=0, rotation=0,xScale=1,yScale=0.7,onComplete=out})  
@@ -895,8 +844,6 @@ composer.removeHidden()
 	
 	bound:addEventListener("collision",miss)
     Runtime:addEventListener( "touch", act)
-
-
 
     -- sheet music
     timer.performWithDelay( 3080, function() produce_beat(1) end,1 )
