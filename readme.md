@@ -17,9 +17,9 @@ git clone https://github.com/xxjennyxx/music-game.git
 
 在運行音樂遊戲之前，請確保已安裝所需的 Lua 和 Corona SDK。請按照您所使用的操作系統的安裝說明進行操作：
 
-1. **Lua**: 訪問 Lua 網站 (https://www.lua.org/)，下載適合您系統的 Lua 版本，並按照提供的安裝說明進行安裝。
+1. **Lua**: 訪問 [Lua 網站](https://www.lua.org/)，下載適合您系統的 Lua 版本，並按照提供的安裝說明進行安裝。
 
-2. **Corona SDK**: 訪問 Corona SDK 網站 (https://coronalabs.com/)，下載適合您操作系統的 Corona SDK 套件，按照提供的說明進行安裝。
+2. **Corona SDK**: 訪問 [Corona SDK 網站](https://coronalabs.com/)，下載適合您操作系統的 Corona SDK 套件，按照提供的說明進行安裝。
 
 ### Execute the Program
 
