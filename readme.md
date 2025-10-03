@@ -2,6 +2,12 @@
 
 這是一個互動性的音樂遊戲。
 
+## Demo Video
+
+[Click here to watch the demo](https://youtu.be/xpA2ibNBm8I)
+
+[![Watch the video](https://img.youtube.com/vi/xpA2ibNBm8I/0.jpg)](https://youtu.be/xpA2ibNBm8I)
+
 
 ## 使用說明
 
